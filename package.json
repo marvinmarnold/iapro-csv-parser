@@ -1,0 +1,13 @@
+{
+  "name": "ftn",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "csv": "^1.1.0",
+    "d3": "^4.3.0",
+    "json2csv": "^3.7.1",
+    "meteor-node-stubs": "~0.2.0"
+  }
+}
