@@ -3,8 +3,10 @@ import csv from 'csv';
 import fs from 'fs';
 import json2csv from 'json2csv';
 
+const csvPath = "IAPRO_UoF2016_Format2.csv"
+const outPath = "Reformated_" + new Date().getTime() + "_" + csvPath;
+
 const getNewCsv = (callback) => {
-  const csvPath = "FILENAME"
   const csvFile = Assets.getText(csvPath)
   let newCsv = []
 
@@ -39,14 +41,19 @@ const getNewCsv = (callback) => {
             officerName = officerMatch[2]
           }
 
+          const levelOfForce = f.split("-")[0]
+          const typeOfForce = f.split("-")[1]
+
           const ftn = {
             pibNum: row[0],
             itemNum: row[8],
             date_occurred: new Date(row[1]),
             officerName,
             officerRank,
-            typeOfForce: f,
-            location: row[13]
+            levelOfForce,
+            typeOfForce,
+            location: row[13],
+            summary: row[5]
           }
           newCsv.push(ftn)
         }
@@ -66,9 +73,9 @@ Meteor.startup(() => {
 
     var csv = json2csv({ data: newCsv });
 
-    fs.writeFile('PATH_TO_FILE', csv, function(err) {
+    fs.writeFile(outPath, csv, function(err) {
       if (err) throw err;
-      console.log('file saved');
+      console.log('File saved to ' + outPath);
     });
 
   })
